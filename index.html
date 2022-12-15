@@ -34,6 +34,14 @@
 
         <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
         <script type="text/babel">
+            const jsonLocalStorage = {
+                setItem: (key, value) => {
+                    localStorage.setItem(key, JSON.stringify(value));
+                },
+                getItem: (key) => {
+                    return JSON.parse(localStorage.getItem(key));
+                },
+            };
             const CAT1 = "https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react";
             const CAT2 = "https://cataas.com/cat/BxqL2EjFmtxDkAm2/says/inflearn";
             const CAT3 = "https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript";
@@ -73,9 +81,11 @@
             };
 
             const Form = ({ updateMainCat }) => {
+                //form 데이터 값 상태 초기화
                 const [value, setValue] = React.useState("");
+                //errorMessage 상태 초기화
                 const [errorMessage, setErrorMessage] = React.useState("");
-
+                //한글 입력 validation
                 const includesHangul = (text) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i.test(text);
 
                 //form > input에 값이 변경될때
@@ -121,20 +131,29 @@
 
             const App = () => {
                 //counter - useState로 지정한 초기값 setCounter - 초기값을 변형하는 함수
-                let [counter, setCounter] = React.useState(localStorage.getItem("counter"));
+                let [counter, setCounter] = React.useState(jsonLocalStorage.getItem("counter"));
+                //메인 이미지 초기 값 설정
                 const [mainImg, setMainImg] = React.useState(CAT1);
-                const [favorites, setFavorites] = React.useState([CAT1, CAT2]);
+                //하트 한 이미지들을 로컬스토리지에서 가져온다.
+                const [favorites, setFavorites] = React.useState(
+                    jsonLocalStorage.getItem("favorites") || []
+                );
 
                 //form submit 실행
                 function updateMainCat() {
+                    //메인 이미지 상태 변경
                     setMainImg(CAT2);
+                    //카운터 상태 변경
                     setCounter(++counter);
                     //로컬스토리지 키 value는 string으로 저장된다 항상 Number 변환, 증감연산자로 자바스크립트가 암묵적 타입변환으로 해주기도 한다.
-                    localStorage.setItem("counter", counter);
+                    jsonLocalStorage.setItem("counter", counter);
                 }
                 //button 클릭시 기존배열에 CAT3 데이터 추가
                 function handleHeartClick() {
-                    setFavorites([...favorites, CAT3]);
+                    //하트 버튼 클릭시 해당 이미지 favorites에 추가
+                    setFavorites([...favorites, mainImg]);
+                    //로컬스토리지에 저장
+                    jsonLocalStorage.setItem("favorites", favorites);
                 }
                 return (
                     <div>
