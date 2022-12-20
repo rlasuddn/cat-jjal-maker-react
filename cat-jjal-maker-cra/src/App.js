@@ -18,6 +18,9 @@ import Form from "./components/form";
 cra 배포 하기: npm run build로 build 실행 -> jsx파일이 아닌 build 파일을 업로드
 npm i gh-pages -> package.json scripts "deploy": "gh-pages -d build" 명령어 추가
 package.json 위 상단 "homepage": "{깃헙 페이지 주소}", 입력 마지막 "/" 제거
+npm run build, deploy 실행 -> git hub 코드 탭 gh-pages 브랜치 추가
+setting - pages - branch gh-pages로 변경 후 save
+
 
 */
 
