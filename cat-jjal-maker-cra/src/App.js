@@ -14,6 +14,12 @@ import MainCard from "./components/main-card";
 import Form from "./components/form";
 
 //cra 생성 명령어: npx create-react-app 폴더명
+/*
+cra 배포 하기: npm run build로 build 실행 -> jsx파일이 아닌 build 파일을 업로드
+npm i gh-pages -> package.json scripts "deploy": "gh-pages -d build" 명령어 추가
+package.json 위 상단 "homepage": "{깃헙 페이지 주소}", 입력 마지막 "/" 제거
+
+*/
 
 const App = () => {
     //counter - useState로 지정한 초기값 setCounter - 초기값을 변형하는 함수
